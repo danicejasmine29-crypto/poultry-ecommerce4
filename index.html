@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Villarante's Poultry Farm</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fcfbfa;
+      color: #2c2523;
+    }
+
+    h1, h2, h3, .font-serif-custom {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .bg-brand-brown {
+      background-color: #8c4315;
+    }
+
+    .bg-brand-dark {
+      background-color: #2e170c;
+    }
+
+    .bg-brand-cream {
+      background-color: #f7eedf;
+    }
+
+    .text-brand-brown {
+      color: #8c4315;
+    }
+
+    .text-brand-cream {
+      color: #f7eedf;
+    }
+
+    .btn-brown {
+      background-color: #8c4315;
+      color: #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    .btn-brown:hover {
+      background-color: #70330e;
+    }
+
+    .btn-cream {
+      background-color: #f7eedf;
+      color: #8c4315;
+      transition: all 0.3s ease;
+    }
+
+    .btn-cream:hover {
+      background-color: #ebd7be;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- HEADER / NAVIGATION BAR -->
+  <header class="bg-brand-brown text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+        <div class="bg-white text-brand-brown p-2 rounded-full w-10 h-10 flex items-center justify-center font-bold">
+          <i class="fa-solid fa-egg text-xl"></i>
+        </div>
+        <span class="font-serif-custom text-2xl font-bold tracking-wide">Villarante's Poultry</span>
+      </div>
+
+      <nav class="hidden md:flex items-center space-x-8 font-medium">
+        <button onclick="switchTab('home')" class="hover:underline underline-offset-8">Home</button>
+        <button onclick="switchTab('products')" class="hover:underline underline-offset-8">Chicken Categories</button>
+        <button onclick="switchTab('about')" class="hover:underline underline-offset-8">About</button>
+        <button onclick="switchTab('contact')" class="hover:underline underline-offset-8">Contact</button>
+        <button onclick="switchTab('admin')" class="hover:underline underline-offset-8 text-yellow-300 font-semibold"><i class="fa-solid fa-lock text-xs mr-1"></i> Admin</button>
+      </nav>
+
+      <div class="flex items-center space-x-4">
+        <button onclick="openCart()" class="relative p-2 text-white hover:text-yellow-200">
+          <i class="fa-solid fa-cart-shopping text-xl"></i>
+          <span id="cart-badge" class="absolute -top-1 -right-1 bg-yellow-400 text-brand-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+        </button>
+        <button onclick="alert('Sign up feature coming soon!')" class="btn-cream px-5 py-2 rounded-md font-semibold text-sm">Sign Up</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-grow">
+
+    <!-- HOME PAGE -->
+    <div id="page-home">
+      <!-- HERO BANNER -->
+      <section class="relative bg-cover bg-center h-[520px] flex items-center justify-center text-center text-white px-4" style="background-image: linear-gradient(rgba(46, 23, 12, 0.65), rgba(46, 23, 12, 0.65)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Male_and_female_chicken.jpg/1200px-Male_and_female_chicken.jpg');">
+        <div class="max-w-4xl">
+          <h1 class="text-4xl sm:text-6xl font-bold mb-4 tracking-tight">Quality Chickens Raised with Care</h1>
+          <p class="text-lg sm:text-xl font-light mb-8 max-w-2xl mx-auto">Healthy, organically fed, and farm-raised chickens available for online reservation and farm pickup.</p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <button onclick="switchTab('products')" class="btn-brown px-8 py-3.5 rounded-md font-semibold text-base shadow-lg">Explore Our Chickens</button>
+            <button onclick="switchTab('products')" class="btn-cream px-8 py-3.5 rounded-md font-semibold text-base shadow-lg">Place Pre-Order</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURED CHICKENS BANNER -->
+      <section class="max-w-6xl mx-auto px-4 mt-12 mb-8">
+        <div class="bg-brand-brown text-white py-8 px-6 text-center rounded-sm">
+          <h2 class="text-3xl sm:text-4xl font-bold mb-2">Featured Chickens</h2>
+          <p class="text-yellow-100 text-base">Our healthy chickens raised with top quality feed and farm care</p>
+        </div>
+      </section>
+
+      <!-- FEATURED PRODUCTS GRID -->
+      <section class="max-w-6xl mx-auto px-4 mb-16">
+        <div id="featured-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Dynamically populated -->
+        </div>
+        <div class="text-center mt-10">
+          <button onclick="switchTab('products')" class="border-2 border-brand-brown text-brand-brown font-semibold px-8 py-3 rounded-md hover:bg-brand-brown hover:text-white transition">View All Categories</button>
+        </div>
+      </section>
+
+      <!-- WHY CHOOSE US SECTION -->
+      <section class="max-w-6xl mx-auto px-4 mb-16">
+        <div class="bg-brand-brown text-white py-8 px-6 text-center rounded-sm mb-8">
+          <h2 class="text-3xl sm:text-4xl font-bold">Why Choose Villarante's Poultry?</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="bg-white p-6 rounded-xl shadow-sm border text-center">
+            <h4 class="font-bold text-lg mb-2 text-brand-brown">Vaccinated & Healthy</h4>
+            <p class="text-gray-600 text-sm">All chickens receive complete standard vaccines and vitamins.</p>
+          </div>
+          <div class="bg-white p-6 rounded-xl shadow-sm border text-center">
+            <h4 class="font-bold text-lg mb-2 text-brand-brown">Organic Feed</h4>
+            <p class="text-gray-600 text-sm">Nurtured with high-nutrition organic grains and clean free-range space.</p>
+          </div>
+          <div class="bg-white p-6 rounded-xl shadow-sm border text-center">
+            <h4 class="font-bold text-lg mb-2 text-brand-brown">Easy Pre-Ordering</h4>
+            <p class="text-gray-600 text-sm">Reserve ahead for farm pickup or scheduled local transport.</p>
+          </div>
+          <div class="bg-white p-6 rounded-xl shadow-sm border text-center">
+            <h4 class="font-bold text-lg mb-2 text-brand-brown">Multiple Breeds</h4>
+            <p class="text-gray-600 text-sm">From egg layers to free-range native and heritage breeds.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- PRODUCTS / CATEGORIES PAGE -->
+    <div id="page-products" class="hidden max-w-7xl mx-auto px-4 py-8">
+      <div class="bg-brand-brown text-white py-8 px-6 text-center rounded-sm mb-8">
+        <h2 class="text-3xl font-bold">Chicken Categories & Catalog</h2>
+        <p class="text-yellow-100 text-sm">Browse chickens grouped by age level and breed characteristics</p>
+      </div>
+
+      <!-- FILTER BUTTONS -->
+      <div class="flex flex-wrap justify-center gap-3 mb-10">
+        <button onclick="filterCategory('all')" class="cat-btn active px-5 py-2.5 rounded-full font-medium text-sm border border-brand-brown bg-brand-brown text-white">All Chickens</button>
+        <button onclick="filterCategory('4-month')" class="cat-btn px-5 py-2.5 rounded-full font-medium text-sm border border-brand-brown bg-white text-brand-brown hover:bg-brand-cream">4-Month-Old Chickens</button>
+        <button onclick="filterCategory('5-month')" class="cat-btn px-5 py-2.5 rounded-full font-medium text-sm border border-brand-brown bg-white text-brand-brown hover:bg-brand-cream">5-Month-Old Chickens</button>
+        <button onclick="filterCategory('6-month')" class="cat-btn px-5 py-2.5 rounded-full font-medium text-sm border border-brand-brown bg-white text-brand-brown hover:bg-brand-cream">6-Month-Old & Older</button>
+      </div>
+
+      <!-- ALL PRODUCTS LIST GRID -->
+      <div id="full-product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <!-- Dynamically rendered -->
+      </div>
+    </div>
+
+    <!-- ABOUT PAGE -->
+    <div id="page-about" class="hidden max-w-5xl mx-auto px-4 py-12">
+      <div class="bg-brand-brown text-white py-8 px-6 text-center rounded-sm mb-8">
+        <h2 class="text-3xl font-bold">About Villarante's Poultry</h2>
+      </div>
+      <div class="bg-white p-8 rounded-xl shadow-md border space-y-6">
+        <p class="text-gray-700 leading-relaxed">Villarante's Poultry Farm specializes in high-quality, health-monitored, and organically raised chickens for backyards, farms, and egg production.</p>
+      </div>
+    </div>
+
+    <!-- CONTACT PAGE -->
+    <div id="page-contact" class="hidden max-w-5xl mx-auto px-4 py-12">
+      <div class="bg-brand-brown text-white py-8 px-6 text-center rounded-sm mb-8">
+        <h2 class="text-3xl font-bold">Contact & Farm Location</h2>
+      </div>
+      <div class="bg-white p-8 rounded-xl shadow-md border grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="font-bold text-xl mb-4 text-brand-brown">Get in Touch</h3>
+          <p class="text-sm text-gray-600 mb-2"><strong>Address:</strong> 123 Poultry Farm Road, Philippines</p>
+          <p class="text-sm text-gray-600 mb-2"><strong>Phone:</strong> +63 912 345 6789</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD PAGE -->
+    <div id="page-admin" class="hidden max-w-6xl mx-auto px-4 py-8">
+      <div class="bg-brand-brown text-white py-6 px-6 text-center rounded-sm mb-8 flex justify-between items-center flex-wrap gap-4">
+        <div>
+          <h2 class="text-2xl font-bold">Admin Inventory Dashboard</h2>
+        </div>
+        <button onclick="openAddModal()" class="bg-yellow-500 text-brand-dark px-4 py-2 rounded-md font-bold text-sm"><i class="fa-solid fa-plus mr-1"></i> Add New Chicken</button>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md overflow-x-auto border">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-gray-100 text-gray-700 uppercase text-xs">
+              <th class="p-4 border-b">Image</th>
+              <th class="p-4 border-b">Name</th>
+              <th class="p-4 border-b">Category</th>
+              <th class="p-4 border-b">Price</th>
+              <th class="p-4 border-b">Stock</th>
+              <th class="p-4 border-b text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-table-body" class="divide-y text-sm">
+            <!-- Dynamically rendered -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-brand-dark text-gray-300 pt-12 pb-6 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-gray-500">
+      &copy; 2026 Villarante's Poultry. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- PRODUCT DETAILS MODAL -->
+  <div id="modal-details" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-xl max-w-md w-full p-6 relative">
+      <button onclick="closeModal('modal-details')" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+      <img id="detail-img" src="" class="w-full h-52 object-cover rounded-lg mb-4">
+      <h3 id="detail-title" class="text-2xl font-bold mb-1 text-brand-brown"></h3>
+      <p id="detail-price" class="text-xl font-bold text-gray-800 mb-3"></p>
+      <div class="bg-brand-cream p-3 rounded-md mb-3 text-xs space-y-1">
+        <p><strong>Category:</strong> <span id="detail-cat"></span></p>
+        <p><strong>Breed:</strong> <span id="detail-breed"></span></p>
+      </div>
+      <p id="detail-desc" class="text-sm text-gray-600 mb-6"></p>
+      <button id="detail-add-btn" class="btn-brown w-full py-3 rounded-md font-semibold">Add to Order</button>
+    </div>
+  </div>
+
+  <!-- ADMIN ADD/EDIT MODAL -->
+  <div id="modal-admin" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-xl max-w-md w-full p-6 relative">
+      <button onclick="closeModal('modal-admin')" class="absolute top-3 right-3 text-gray-400 text-xl font-bold">&times;</button>
+      <h3 id="admin-modal-title" class="text-xl font-bold mb-4 text-brand-brown">Add New Chicken Listing</h3>
+      <form onsubmit="saveChicken(event)" class="space-y-3">
+        <input type="hidden" id="admin-id">
+        <div>
+          <label class="text-xs font-bold text-gray-600">Chicken Name</label>
+          <input type="text" id="admin-name" required class="w-full border p-2 rounded text-sm">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-xs font-bold text-gray-600">Category</label>
+            <select id="admin-cat" class="w-full border p-2 rounded text-sm">
+              <option value="4-month">4-Month-Old</option>
+              <option value="5-month">5-Month-Old</option>
+              <option value="6-month">6-Month & Older</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-gray-600">Breed</label>
+            <input type="text" id="admin-breed" required class="w-full border p-2 rounded text-sm">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="text-xs font-bold text-gray-600">Price (₱)</label>
+            <input type="number" id="admin-price" required class="w-full border p-2 rounded text-sm">
+          </div>
+          <div>
+            <label class="text-xs font-bold text-gray-600">Available Stock</label>
+            <input type="number" id="admin-stock" required class="w-full border p-2 rounded text-sm">
+          </div>
+        </div>
+        <div>
+          <label class="text-xs font-bold text-gray-600">Image URL</label>
+          <input type="url" id="admin-img" required class="w-full border p-2 rounded text-sm">
+        </div>
+        <div>
+          <label class="text-xs font-bold text-gray-600">Description</label>
+          <textarea id="admin-desc" rows="3" required class="w-full border p-2 rounded text-sm"></textarea>
+        </div>
+        <button type="submit" class="btn-brown w-full py-2.5 rounded font-bold text-sm mt-2">Save Product</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // INITIAL POULTRY DATA (PULOS TINUOD NA MANOK - BOP BOP, YURI, LUMI)
+    let chickens = [
+      {
+        id: 1,
+        name: "Bop Bop",
+        category: "4-month",
+        breed: "Black Australorp Hen",
+        price: 380,
+        stock: 18,
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Australorp_Hen.JPG/800px-Australorp_Hen.JPG",
+        description: "4-month-old black australorp pullet chicken. Healthy, active, and fully vaccinated."
+      },
+      {
+        id: 2,
+        name: "Yuri",
+        category: "5-month",
+        breed: "Rhode Island Red Rooster",
+        price: 450,
+        stock: 12,
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Rhode_Island_Red_Rooster.JPG/800px-Rhode_Island_Red_Rooster.JPG",
+        description: "5-month-old healthy rooster with vibrant feathers and strong growth."
+      },
+      {
+        id: 3,
+        name: "Lumi",
+        category: "5-month",
+        breed: "Brown Layer Hen",
+        price: 420,
+        stock: 20,
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Male_and_female_chicken.jpg/800px-Male_and_female_chicken.jpg",
+        description: "5-month-old reddish brown hen chicken. Active and near egg-laying age."
+      }
+    ];
+
+    let cart = [];
+
+    // NAVIGATION SWITCHER
+    function switchTab(tab) {
+      ['home', 'products', 'about', 'contact', 'admin'].forEach(t => {
+        document.getElementById(`page-${t}`).classList.add('hidden');
+      });
+      document.getElementById(`page-${tab}`).classList.remove('hidden');
+      window.scrollTo(0,0);
+
+      if (tab === 'home') renderFeatured();
+      if (tab === 'products') renderProducts('all');
+      if (tab === 'admin') renderAdminTable();
+    }
+
+    // RENDER FEATURED CHICKENS
+    function renderFeatured() {
+      const grid = document.getElementById('featured-grid');
+      grid.innerHTML = chickens.map(c => createCardHtml(c)).join('');
+    }
+
+    // RENDER ALL / FILTERED PRODUCTS
+    function renderProducts(cat = 'all') {
+      const grid = document.getElementById('full-product-grid');
+      const filtered = cat === 'all' ? chickens : chickens.filter(c => c.category === cat);
+      grid.innerHTML = filtered.map(c => createCardHtml(c)).join('');
+    }
+
+    // PRODUCT CARD HTML GENERATOR
+    function createCardHtml(c) {
+      return `
+        <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 flex flex-col hover:shadow-lg transition">
+          <img src="${c.image}" alt="${c.name}" class="w-full h-48 object-cover">
+          <div class="p-5 flex-grow flex flex-col justify-between">
+            <div>
+              <h3 class="font-serif-custom text-xl font-bold mb-1 text-gray-900">${c.name}</h3>
+              <p class="text-xs text-gray-500 mb-2">${c.breed} • ${c.category.replace('-', ' ')} old</p>
+              <p class="text-xs text-gray-600 line-clamp-2 mb-4">${c.description}</p>
+            </div>
+            <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+              <span class="font-serif-custom text-xl font-bold text-brand-brown">₱${c.price.toFixed(2)}</span>
+              <div class="space-x-1">
+                <button onclick="showDetails(${c.id})" class="text-xs border px-2.5 py-1.5 rounded hover:bg-gray-50">Details</button>
+                <button onclick="addToCart(${c.id})" class="btn-brown text-xs px-3 py-1.5 rounded font-semibold">Add to Order</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // CATEGORY FILTER
+    function filterCategory(cat) {
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.classList.remove('bg-brand-brown', 'text-white');
+        btn.classList.add('bg-white', 'text-brand-brown');
+      });
+      event.target.classList.remove('bg-white', 'text-brand-brown');
+      event.target.classList.add('bg-brand-brown', 'text-white');
+      renderProducts(cat);
+    }
+
+    // SHOW DETAILS MODAL
+    function showDetails(id) {
+      const c = chickens.find(item => item.id === id);
+      if(!c) return;
+      document.getElementById('detail-img').src = c.image;
+      document.getElementById('detail-title').innerText = c.name;
+      document.getElementById('detail-price').innerText = `₱${c.price.toFixed(2)}`;
+      document.getElementById('detail-cat').innerText = `${c.category.replace('-', ' ')} old`;
+      document.getElementById('detail-breed').innerText = c.breed;
+      document.getElementById('detail-desc').innerText = c.description;
+      document.getElementById('detail-add-btn').onclick = function() { addToCart(c.id); closeModal('modal-details'); };
+      document.getElementById('modal-details').classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    // CART LOGIC
+    function addToCart(id) {
+      const chicken = chickens.find(c => c.id === id);
+      cart.push(chicken);
+      const badge = document.getElementById('cart-badge');
+      badge.innerText = cart.length;
+      badge.classList.remove('hidden');
+      alert(`Added ${chicken.name} to your order!`);
+    }
+
+    function openCart() {
+      if(cart.length === 0) {
+        alert("Your order cart is empty!");
+      } else {
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        alert(`You have ${cart.length} item(s) in your cart.\nTotal Amount: ₱${total.toFixed(2)}`);
+      }
+    }
+
+    // ADMIN DASHBOARD
+    function renderAdminTable() {
+      const tbody = document.getElementById('admin-table-body');
+      tbody.innerHTML = chickens.map(c => `
+        <tr class="hover:bg-gray-50">
+          <td class="p-3"><img src="${c.image}" class="w-12 h-12 rounded object-cover"></td>
+          <td class="p-3 font-semibold">${c.name}</td>
+          <td class="p-3">${c.category}</td>
+          <td class="p-3 font-bold">₱${c.price}</td>
+          <td class="p-3">${c.stock} pcs</td>
+          <td class="p-3 text-center space-x-2">
+            <button onclick="editChicken(${c.id})" class="text-blue-600 hover:underline text-xs"><i class="fa-solid fa-pen"></i> Edit</button>
+            <button onclick="deleteChicken(${c.id})" class="text-red-600 hover:underline text-xs"><i class="fa-solid fa-trash"></i> Delete</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openAddModal() {
+      document.getElementById('admin-id').value = '';
+      document.getElementById('admin-name').value = '';
+      document.getElementById('admin-breed').value = '';
+      document.getElementById('admin-price').value = '';
+      document.getElementById('admin-stock').value = '';
+      document.getElementById('admin-img').value = '';
+      document.getElementById('admin-desc').value = '';
+      document.getElementById('admin-modal-title').innerText = 'Add New Chicken Listing';
+      document.getElementById('modal-admin').classList.remove('hidden');
+    }
+
+    function editChicken(id) {
+      const c = chickens.find(item => item.id === id);
+      if(!c) return;
+      document.getElementById('admin-id').value = c.id;
+      document.getElementById('admin-name').value = c.name;
+      document.getElementById('admin-cat').value = c.category;
+      document.getElementById('admin-breed').value = c.breed;
+      document.getElementById('admin-price').value = c.price;
+      document.getElementById('admin-stock').value = c.stock;
+      document.getElementById('admin-img').value = c.image;
+      document.getElementById('admin-desc').value = c.description;
+      document.getElementById('admin-modal-title').innerText = 'Edit Chicken Listing';
+      document.getElementById('modal-admin').classList.remove('hidden');
+    }
+
+    function saveChicken(e) {
+      e.preventDefault();
+      const id = document.getElementById('admin-id').value;
+      const chickenData = {
+        id: id ? parseInt(id) : Date.now(),
+        name: document.getElementById('admin-name').value,
+        category: document.getElementById('admin-cat').value,
+        breed: document.getElementById('admin-breed').value,
+        price: parseFloat(document.getElementById('admin-price').value),
+        stock: parseInt(document.getElementById('admin-stock').value),
+        image: document.getElementById('admin-img').value,
+        description: document.getElementById('admin-desc').value
+      };
+
+      if(id) {
+        const index = chickens.findIndex(c => c.id === parseInt(id));
+        chickens[index] = chickenData;
+      } else {
+        chickens.push(chickenData);
+      }
+
+      closeModal('modal-admin');
+      renderAdminTable();
+      renderFeatured();
+      alert('Chicken listing saved successfully!');
+    }
+
+    function deleteChicken(id) {
+      if(confirm('Are you sure you want to delete this chicken listing?')) {
+        chickens = chickens.filter(c => c.id !== id);
+        renderAdminTable();
+        renderFeatured();
+      }
+    }
+
+    window.onload = function() {
+      renderFeatured();
+    };
+  </script>
+</body>
+</html>
